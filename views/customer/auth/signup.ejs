@@ -6,9 +6,11 @@
 <%- include("../includes/header") %>
 
 <main>
-    <h1>Create New Account</h1>
+    <h1> Create New Account</h1>
    
     <form action="/signup" method="POST">
+
+        <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
 
     <p>
         <label for="email">E-Mail</label>
@@ -56,11 +58,6 @@
     </p>
 
  </form>
-
-    
-
-
-    
 </main>
     
 

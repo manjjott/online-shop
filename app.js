@@ -1,18 +1,25 @@
 const express = require("express");
 const authRoutes = require("./routes/auth-routes");
 const path = require("path");
+const csrf = require("csurf");
 
 const app = express();
 
 const db = require("./data/database");
+const addCSRFTokenMiddleware = require("./middleware/csrf-token");
 
 // setting up 'ejs'
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use(express.static("public"));
-// important for the form submission
 app.use(express.urlencoded({ extended: false }));
+
+//Secruity
+app.use(csrf());
+app.use(addCSRFTokenMiddleware);
+
+
 
 app.use(authRoutes);
 
