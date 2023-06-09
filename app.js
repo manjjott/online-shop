@@ -2,9 +2,11 @@ const express = require("express");
 const authRoutes = require("./routes/auth-routes");
 const path = require("path");
 const csrf = require("csurf");
+const expressSession = require('express-session');
 
 const app = express();
 
+const createSessionConfig = require('./config/session');
 const db = require("./data/database");
 
 
@@ -19,6 +21,10 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));
 
+//Session
+const sessionConfig = createSessionConfig();
+
+app.use(expressSession(sessionConfig));
 //Secruity
 app.use(csrf());
 app.use(addCSRFTokenMiddleware);
