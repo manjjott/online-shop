@@ -5,15 +5,12 @@ const productRoutes = require("./routes/product-route");
 const adminRoutes = require("./routes/admin-routes");
 const path = require("path");
 const csrf = require("csurf");
-const expressSession = require('express-session');
-
+const expressSession = require("express-session");
 
 const app = express();
 
-const createSessionConfig = require('./config/session');
+const createSessionConfig = require("./config/session");
 const db = require("./data/database");
-
-
 
 const addCSRFTokenMiddleware = require("./middleware/csrf-token");
 const errorHandlerMiddleware = require("./middleware/error-handler");
@@ -24,6 +21,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use(express.static("public"));
+app.use('/products/assets', express.static('product-data'))
 app.use(express.urlencoded({ extended: false }));
 
 //Session
@@ -39,8 +37,7 @@ app.use(checkAuthMiddleware);
 app.use(baseRoutes);
 app.use(authRoutes);
 app.use(productRoutes);
-app.use("/admin",adminRoutes);
-
+app.use("/admin", adminRoutes);
 
 app.use(errorHandlerMiddleware);
 
