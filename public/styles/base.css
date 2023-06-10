@@ -46,6 +46,19 @@ a {
   border-color: var(--color-primary-700);
 }
 
+.btn-alt {
+  background-color: transparent;
+  color: var(--color-primary-500);
+  font: inherit;
+  padding: var(--space-2) var(--space-6);
+  border-radius: var(--border-radius-small);
+}
+
+.btn-alt:hover,
+.btn-alt:active {
+  background-color: var(--color-primary-500-contrast);
+}
+
 .alert {
 
     border-radius: var(--border-radius-small);
