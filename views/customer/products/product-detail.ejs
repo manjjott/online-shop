@@ -1,0 +1,25 @@
+<%- include('../../base/includes/head', { pageTitle: 'Signup' }) %>
+  <link rel="stylesheet" href="/styles/form.css">
+  <link rel="stylesheet" href="/styles/auth.css">
+  <link rel="stylesheet" href="/styles/products.css">
+</head>
+<body>
+  <%- include('../../base/includes/header') %>
+  <main id="product-details">
+    <header id="product-back">
+      <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
+      <div id="product-info">
+        <h1><%= product.title %></h1>
+        <p>$<%= product.price %></p>
+        <button>Add to cart</button>
+      </div>
+    </header>
+
+    <p id="product-description"> <%= product.description %></p>
+    
+
+
+      
+
+  </main>
+<%- include('../../base/includes/footer') %>
