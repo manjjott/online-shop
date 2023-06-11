@@ -3,6 +3,7 @@ const authRoutes = require("./routes/auth-routes");
 const baseRoutes = require("./routes/base-routes");
 const productRoutes = require("./routes/product-route");
 const adminRoutes = require("./routes/admin-routes");
+const protectRoutesMiddleware = require("./middleware/protect-routes");
 const path = require("path");
 const csrf = require("csurf");
 const expressSession = require("express-session");
@@ -21,7 +22,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use(express.static("public"));
-app.use('/products/assets', express.static('product-data'))
+app.use("/products/assets", express.static("product-data"));
 app.use(express.urlencoded({ extended: false }));
 
 //Session
@@ -37,6 +38,7 @@ app.use(checkAuthMiddleware);
 app.use(baseRoutes);
 app.use(authRoutes);
 app.use(productRoutes);
+app.use(protectRoutesMiddleware.protectRoutes); //middleware
 app.use("/admin", adminRoutes);
 
 app.use(errorHandlerMiddleware);

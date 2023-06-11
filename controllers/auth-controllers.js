@@ -38,7 +38,7 @@ async function signUp(req, res, next) {
       req.body.postal,
       req.body.street,
       req.body.city
-    ) &&
+    ) || 
     !validation.emailIsConfirmed(req.body.email, req.body["confirm-email"])
   ) {
     sessionFlash.flashDataSession(
@@ -68,7 +68,7 @@ async function signUp(req, res, next) {
     const existsAlready = await user.existsAlready();
 
     if (existsAlready) {
-      sessionFlash.flashDataToSession(
+      sessionFlash.flashDataSession(
         req,
         {
           errorMessage: "User exists already! Try logging in instead!",
