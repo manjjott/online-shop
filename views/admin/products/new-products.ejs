@@ -1,6 +1,7 @@
 <%- include('../../base/includes/head', { pageTitle: 'Add new Products' }) %>
   <link rel="stylesheet" href="/styles/form.css">
   <link rel="stylesheet" href="/styles/auth.css">
+  <script src="/scripts/image-preview.js" defer></script>
 </head>
 <body>
   <%- include('../../base/includes/header') %>
@@ -15,10 +16,17 @@
         <label for="title">Title</label>
         <input type="text" id="title" name="title" required>
         </p>
-         <p>
+
+        <div id="image-upload-control">
+            <p>
             <label for="image">Image</label>
             <input type="file" id="image" name="image" accept="image/png,image/jpg" required>
+
         </p>
+
+        <img src="" alt="selected image">
+
+    </div>
 
         <p>
             <label for="summary">Summary</label>
