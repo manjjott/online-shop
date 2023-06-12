@@ -2,7 +2,7 @@
 
     <% if(!locals.isAdmin) {%>
     <li> <a href="/">Shop</a></li>
-    <li><a href="/cart">Cart</a></li>
+    <li><a href="/cart">Cart <span class="badge"><%= locals.cart.totalQuantity %></span></a></li>
 
     <% } %>
 
@@ -31,7 +31,7 @@
     <li>
         <form action="/logout" method="POST">
         <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
-        <button>Logout</button>
+        <button class="btn">Logout</button>
     </form>
     </li>
 

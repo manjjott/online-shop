@@ -4,6 +4,7 @@ const baseRoutes = require("./routes/base-routes");
 const productRoutes = require("./routes/product-route");
 const adminRoutes = require("./routes/admin-routes");
 const protectRoutesMiddleware = require("./middleware/protect-routes");
+const cartMiddleware = require("./middleware/cart-middleware");
 const path = require("path");
 const csrf = require("csurf");
 const expressSession = require("express-session");
@@ -28,6 +29,8 @@ app.use(express.urlencoded({ extended: false }));
 //Session
 const sessionConfig = createSessionConfig();
 app.use(expressSession(sessionConfig));
+
+app.use(cartMiddleware);
 //Secruity
 app.use(csrf());
 app.use(addCSRFTokenMiddleware);
