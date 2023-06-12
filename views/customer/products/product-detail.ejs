@@ -1,7 +1,8 @@
-<%- include('../../base/includes/head', { pageTitle: 'Signup' }) %>
+<%- include('../../base/includes/head', { pageTitle: "product title" }) %>
   <link rel="stylesheet" href="/styles/form.css">
   <link rel="stylesheet" href="/styles/auth.css">
   <link rel="stylesheet" href="/styles/products.css">
+  <script src="/scripts/cart-management.js" defer></script>
 </head>
 <body>
   <%- include('../../base/includes/header') %>
@@ -11,7 +12,7 @@
       <div id="product-info">
         <h1><%= product.title %></h1>
         <p>$<%= product.price %></p>
-        <button class="btn">Add to cart</button>
+        <button class="btn" id="cart-button" data-productid="<%= product.id %>" data-csrf="<%= locals.csrfToken %>">Add to cart</button>
       </div>
     </header>
 
