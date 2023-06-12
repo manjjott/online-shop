@@ -1,18 +1,17 @@
-<%- include('../../base/includes/head', { pageTitle: 'Login' }) %>
-  <link rel="stylesheet" href="/styles/form.css">
+<%- include('../../shared/includes/head', { pageTitle: 'Login' }) %>
+  <link rel="stylesheet" href="/styles/forms.css">
   <link rel="stylesheet" href="/styles/auth.css">
 </head>
 <body>
-  <%- include('../../base/includes/header') %>
+  <%- include('../../shared/includes/header') %>
   <main>
     <h1>Login</h1>
-    <% if(inputData.errorMessage) {%>
-         <section class="alert">
-            <h2>Invalid Input</h2>
-            <p><%= inputData.errorMessage %></p>
-
-            </section>
-     <% } %>
+    <% if (inputData.errorMessage) { %>
+      <section class="alert">
+        <h2>Invalid Credentials</h2>
+        <p><%= inputData.errorMessage %></p>
+      </section>
+    <% } %>
     <form action="/login" method="POST">
       <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
       <p>
@@ -21,10 +20,10 @@
       </p>
       <p>
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" minlength="6" value="<%= inputData.password %>" required>
+        <input type="password" id="password" name="password" value="<%= inputData.password %>" required>
       </p>
       <button class="btn">Login</button>
       <p id="switch-form"><a href="/signup">Create a new user</a></p>
     </form>
   </main>
-<%- include('../../base/includes/footer') %>  
+<%- include('../../shared/includes/footer') %>

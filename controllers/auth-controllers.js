@@ -17,10 +17,11 @@ function getSignup(req, res) {
       city: "",
     };
   }
+
   res.render("customer/auth/signup", { inputData: sessionData });
 }
 
-async function signUp(req, res, next) {
+async function signup(req, res, next) {
   const enteredData = {
     email: req.body.email,
     confirmEmail: req.body["confirm-email"],
@@ -30,28 +31,29 @@ async function signUp(req, res, next) {
     postal: req.body.postal,
     city: req.body.city,
   };
+
   if (
     !validation.userDetailsAreValid(
       req.body.email,
       req.body.password,
       req.body.fullname,
-      req.body.postal,
       req.body.street,
+      req.body.postal,
       req.body.city
-    ) || 
+    ) ||
     !validation.emailIsConfirmed(req.body.email, req.body["confirm-email"])
   ) {
-    sessionFlash.flashDataSession(
+    sessionFlash.flashDataToSession(
       req,
       {
-        errorMessage: "Please check your provided input!",
+        errorMessage:
+          "Please check your input. Password must be at least 6 character slong, postal code must be 5 characters long.",
         ...enteredData,
       },
       function () {
         res.redirect("/signup");
       }
     );
-
     return;
   }
 
@@ -59,8 +61,8 @@ async function signUp(req, res, next) {
     req.body.email,
     req.body.password,
     req.body.fullname,
-    req.body.postal,
     req.body.street,
+    req.body.postal,
     req.body.city
   );
 
@@ -68,7 +70,7 @@ async function signUp(req, res, next) {
     const existsAlready = await user.existsAlready();
 
     if (existsAlready) {
-      sessionFlash.flashDataSession(
+      sessionFlash.flashDataToSession(
         req,
         {
           errorMessage: "User exists already! Try logging in instead!",
@@ -90,7 +92,7 @@ async function signUp(req, res, next) {
   res.redirect("/login");
 }
 
-function getLogin(req, res, next) {
+function getLogin(req, res) {
   let sessionData = sessionFlash.getSessionData(req);
 
   if (!sessionData) {
@@ -103,7 +105,7 @@ function getLogin(req, res, next) {
   res.render("customer/auth/login", { inputData: sessionData });
 }
 
-async function login(req, res) {
+async function login(req, res, next) {
   const user = new User(req.body.email, req.body.password);
   let existingUser;
   try {
@@ -113,37 +115,28 @@ async function login(req, res) {
     return;
   }
 
+  const sessionErrorData = {
+    errorMessage:
+      "Invalid credentials - please double-check your email and password!",
+    email: user.email,
+    password: user.password,
+  };
+
   if (!existingUser) {
-    sessionFlash.flashDataSession(
-      req,
-      {
-        errorMessage:
-          "Invalid credentials - please double-check your email and password!",
-        email: user.email,
-        password: user.password,
-      },
-      function () {
-        res.redirect("/login");
-      }
-    );
+    sessionFlash.flashDataToSession(req, sessionErrorData, function () {
+      res.redirect("/login");
+    });
     return;
   }
 
-  const IsPasswordCorrect = await user.comparePassword(existingUser.password);
+  const passwordIsCorrect = await user.hasMatchingPassword(
+    existingUser.password
+  );
 
-  if (!IsPasswordCorrect) {
-    sessionFlash.flashDataSession(
-      req,
-      {
-        errorMessage:
-          "Invalid credentials - please double-check your email and password!",
-        email: user.email,
-        password: user.password,
-      },
-      function () {
-        res.redirect("/login");
-      }
-    );
+  if (!passwordIsCorrect) {
+    sessionFlash.flashDataToSession(req, sessionErrorData, function () {
+      res.redirect("/login");
+    });
     return;
   }
 
@@ -156,10 +149,11 @@ function logout(req, res) {
   authUtil.destroyUserAuthSession(req);
   res.redirect("/login");
 }
+
 module.exports = {
   getSignup: getSignup,
   getLogin: getLogin,
-  signUp: signUp,
+  signup: signup,
   login: login,
   logout: logout,
 };

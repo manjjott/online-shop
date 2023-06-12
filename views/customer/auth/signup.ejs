@@ -1,24 +1,19 @@
-<%- include('../../base/includes/head', { pageTitle: 'Signup' }) %>
-  <link rel="stylesheet" href="/styles/form.css">
+<%- include('../../shared/includes/head', { pageTitle: 'Signup' }) %>
+  <link rel="stylesheet" href="/styles/forms.css">
   <link rel="stylesheet" href="/styles/auth.css">
 </head>
 <body>
-  <%- include('../../base/includes/header') %>
+  <%- include('../../shared/includes/header') %>
   <main>
     <h1>Create New Account</h1>
-
-    <% if(inputData.errorMessage) { %>
-
-        <section class="alert">
-            <h2>Invalid Input</h2>
-            <p><%= inputData.errorMessage %></p>
-
-        </section>
-
-        <% } %>
+    <% if (inputData.errorMessage) { %>
+      <section class="alert">
+        <h2>Invalid Input</h2>
+        <p><%= inputData.errorMessage %></p>
+      </section>
+    <% } %>
     <form action="/signup" method="POST">
-      
-        <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
+      <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
       <p>
         <label for="email">E-Mail</label>
         <input type="email" id="email" name="email" value="<%= inputData.email %>" required>
@@ -59,4 +54,4 @@
       <p id="switch-form"><a href="/login">Login instead</a></p>
     </form>
   </main>
-<%- include('../../base/includes/footer') %>
+<%- include('../../shared/includes/footer') %>

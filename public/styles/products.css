@@ -37,7 +37,7 @@
 #product-details header {
   margin-top: var(--space-8);
   padding: var(--space-8);
-  background-color: black;
+  background-color: var(--color-gray-600);
   gap: var(--space-8);
 }
 
@@ -57,9 +57,6 @@
   background-color: var(--color-primary-500-bg);
   padding: var(--space-8);
   white-space: pre-wrap;
-}
-div.product-item-content {
-  background-color: black;
 }
 
 @media (min-width: 48rem) {
