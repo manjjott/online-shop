@@ -1,6 +1,5 @@
-# online-shop
 
-# Web Developer Shop :computer: :shopping_cart:
+# Online Shop :computer: :shopping_cart:
 
 Welcome to the Web Developer Shop repository! This is a web application where users can shop for web development products. It includes both customer and admin interfaces, user authentication, and follows the MVC pattern. Let's dive into the details!
 
